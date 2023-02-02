@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requires</title>
+  </head>
+  <body>
+    <pre class="mermaid">
+      flowchart TB
+        A["进入"] --> B["欢迎页"]
+        B --> checkInfo{"基本信息是否填写"}
+        checkInfo -->|是| D
+        checkInfo -->|否| C["填写基本信息"]
+        C --> D["进入主页"]
+        D --> trigger["来姨妈了-快捷设置最近姨妈日信息"]
+        D --> date["进入日期详情页"]
+        date --> date-check["查看日期提醒概览"]
+        D --> settings["调整基本信息"]
+    </pre>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>requires</title>
+  </head>
+  <body>
+    <pre class="mermaid">
+        mindmap
+        root((电子蓝朋友))
+          功能
+            预计经期
+                倒计时
+                具体日期
+            月经期显示
+            预测期显示
+            易孕期显示
+            安全期显示
+            排卵日显示
+          基础配置
+            姨妈持续天数
+            姨妈周期长度
+            生日
+          二期功能
+            绑定男友
+              经期提前通知
+      </pre
+    >
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs";
+      import mindmap from "https://cdn.jsdelivr.net/npm/@mermaid-js/mermaid-mindmap@9/dist/mermaid-mindmap.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true });
+      await mermaid.registerExternalDiagrams([mindmap]);
+    </script>
+  </body>
+</html>
