@@ -26,25 +26,31 @@ export default function Home() {
             </svg>
           </Link>
         </div>
-        <div className="py-24 text-center italic">
+        <div className="pt-24 pb-20 text-center italic">
           <span className="text-9xl font-bold">3</span>
           <span className="text-xl align-text-bottom">天后</span>
         </div>
 
         <div className="py-4 text-center">
-          <Link href={'/date'} className="underline underline-offset-2 text-xl">
+          <Link href={"/date"} className="underline underline-offset-2 text-xl">
             预计经期开始日为 2 月 1 日
           </Link>
         </div>
       </div>
 
-      <div className="flex justify-center items-center grow">
+      <div className="flex justify-center flex-col items-center grow">
         <button className="group relative inline-block focus:outline-none focus:ring">
           <span className="absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
           <span className="relative inline-block border-2 border-current px-12 py-7 text-3xl font-medium uppercase tracking-widest text-white group-active:text-opacity-75">
             来姨妈了
           </span>
         </button>
+        <Link
+          href={"/list"}
+          className="underline underline-offset-2 text-xl mt-10"
+        >
+          姨妈日查看
+        </Link>
       </div>
     </div>
   );
