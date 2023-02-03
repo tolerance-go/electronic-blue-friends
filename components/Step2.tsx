@@ -1,10 +1,11 @@
-import { auntCycleLengthColumnData } from '@/constants/keys'
+import { auntCycleLengthColumnData, tagAppStorageKey } from '@/constants/keys'
 import { useUserStore } from '@/stores/user'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import Slider from 'react-slick'
+import store from 'store2'
 import { shallow } from 'zustand/shallow'
-import { ColumnsPicker } from './ColumnsPicker'
+import { ColumnsPickerInput } from './ColumnsPickerInput'
 import { NextStepBtn } from './NextStepBtn'
 
 export default function Step2({
@@ -30,7 +31,7 @@ export default function Step2({
             <div className='text-8xl'>周期</div>
             <div className='mt-2 text-2xl'>姨妈周期长度是多少？</div>
             <div className='mt-10'>
-               <ColumnsPicker<number>
+               <ColumnsPickerInput<number>
                   defaultValue={[user.auntCycleLength]}
                   columns={auntCycleLengthColumnData}
                   onConfirm={(value) => {
@@ -44,6 +45,7 @@ export default function Step2({
             <NextStepBtn
                onClick={() => {
                   router.push('/main')
+                  store.set(tagAppStorageKey, true)
                }}
             >
                开始使用

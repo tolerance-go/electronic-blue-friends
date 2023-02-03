@@ -1,6 +1,13 @@
 'use client'
 import { Transition } from '@headlessui/react'
-import { useRef, useState } from 'react'
+import {
+   forwardRef,
+   ReactElement,
+   Ref,
+   useImperativeHandle,
+   useRef,
+   useState,
+} from 'react'
 import ReactDOM from 'react-dom'
 import MultiPicker from 'rmc-picker/es/MultiPicker'
 import Picker from 'rmc-picker/es/Picker'
@@ -10,48 +17,37 @@ import './ColumnsPicker.scss'
 
 export type ColumnsPickerValue = string | number
 
-export const ColumnsPicker = <T extends ColumnsPickerValue>({
-   columns,
-   defaultValue,
-   format,
-   onConfirm,
-   placeholder,
-   getContainer,
-}: {
+export type ColumnsPickerProps<T> = {
    getContainer?: () => HTMLElement | null
-   placeholder?: string
    columns?: { value: T; title: string | number }[][]
    defaultValue?: T[]
-   format?: (value?: T[]) => string
    onConfirm?: (value?: T[]) => void
-}) => {
+}
+
+export type ColumnsPickerAPI = {
+   open: () => void
+   close: () => void
+   switch: () => void
+}
+
+const ColumnsPicker_ = <T extends ColumnsPickerValue>(
+   { columns, defaultValue, onConfirm, getContainer }: ColumnsPickerProps<T>,
+   ref: Ref<ColumnsPickerAPI>,
+) => {
    const [open, setOpen] = useState(false)
    const [value, setValue] = useState<T[] | undefined>(defaultValue)
-
    const prevValueRef = useRef<T[] | undefined>(value)
+
+   useImperativeHandle(ref, () => {
+      return {
+         open: () => setOpen(true),
+         close: () => setOpen(false),
+         switch: () => setOpen((prev) => !prev),
+      }
+   })
+
    return (
       <>
-         <div
-            className='relative flex h-14 items-center bg-black px-4'
-            onClick={() => setOpen(!open)}
-         >
-            <div className='w-full text-3xl text-white'>
-               {format?.(value) ?? value?.join('/') ?? placeholder ?? '请选择'}
-            </div>
-            <svg
-               className='absolute right-4 text-white'
-               width='0.6em'
-               height='1.2em'
-               viewBox='0 0 10 20'
-               xmlns='http://www.w3.org/2000/svg'
-            >
-               <path d='M5 20L0 15H10L5 20Z' fill='currentColor' />
-               <path
-                  d='M5 4.37114e-07L10 5L0 5L5 4.37114e-07Z'
-                  fill='currentColor'
-               />
-            </svg>
-         </div>
          {!isSSR &&
             ReactDOM.createPortal(
                <Transition
@@ -113,3 +109,9 @@ export const ColumnsPicker = <T extends ColumnsPickerValue>({
       </>
    )
 }
+
+export const ColumnsPicker = forwardRef(ColumnsPicker_) as <
+   T extends ColumnsPickerValue,
+>(
+   p: ColumnsPickerProps<T> & { ref?: Ref<ColumnsPickerAPI> },
+) => ReactElement

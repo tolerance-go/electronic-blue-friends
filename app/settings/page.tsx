@@ -1,6 +1,6 @@
 'use client'
 
-import { ColumnsPicker } from '@/components/ColumnsPicker'
+import { ColumnsPickerInput } from '@/components/ColumnsPickerInput'
 import {
    auntCycleLengthColumnData,
    auntCycleLengthKey,
@@ -75,7 +75,7 @@ export default function Settings() {
                         {
                            {
                               [theDateWhenMyAuntCameRecentlyKey]: (
-                                 <ColumnsPicker<number>
+                                 <ColumnsPickerInput<number>
                                     defaultValue={[year, month, date]}
                                     columns={item.columns}
                                     onConfirm={(value) => {
@@ -90,7 +90,7 @@ export default function Settings() {
                                  />
                               ),
                               [continuousAuntDaysKey]: (
-                                 <ColumnsPicker<number>
+                                 <ColumnsPickerInput<number>
                                     defaultValue={[continuousAuntDays]}
                                     columns={item.columns}
                                     onConfirm={(value) => {
@@ -101,7 +101,7 @@ export default function Settings() {
                                  />
                               ),
                               [auntCycleLengthKey]: (
-                                 <ColumnsPicker<number>
+                                 <ColumnsPickerInput<number>
                                     defaultValue={[auntCycleLength]}
                                     columns={item.columns}
                                     onConfirm={(value) => {

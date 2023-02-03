@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/user'
 import { useRef } from 'react'
 import Slider from 'react-slick'
 import { shallow } from 'zustand/shallow'
-import { ColumnsPicker } from './ColumnsPicker'
+import { ColumnsPickerInput } from './ColumnsPickerInput'
 import { NextStepBtn } from './NextStepBtn'
 
 export default function Step0({
@@ -34,7 +34,7 @@ export default function Step0({
             <div className='text-8xl'>最近</div>
             <div className='mt-2 text-2xl'>姨妈是哪天来的？</div>
             <div className='mt-10'>
-               <ColumnsPicker<number>
+               <ColumnsPickerInput<number>
                   defaultValue={[user.year, user.month, user.date]}
                   columns={dateColumnDataOfRecentAunt}
                   onConfirm={(value) => {

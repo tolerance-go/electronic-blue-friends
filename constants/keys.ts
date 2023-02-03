@@ -80,3 +80,6 @@ export const auntCycleLengthColumnData = [
 ]
 
 export const appStorageKey = 'app-storage'
+
+// 如果用户清除本地数据，会根据此标记量进行跳转
+export const tagAppStorageKey = 'tagAppStorageKey'

@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/user'
 import { useRef } from 'react'
 import Slider from 'react-slick'
 import { shallow } from 'zustand/shallow'
-import { ColumnsPicker } from './ColumnsPicker'
+import { ColumnsPickerInput } from './ColumnsPickerInput'
 import { NextStepBtn } from './NextStepBtn'
 
 export default function Step1({
@@ -31,7 +31,7 @@ export default function Step1({
             <div className='text-8xl'>持续</div>
             <div className='mt-2 text-2xl'>姨妈天数是多少？</div>
             <div className='mt-10'>
-               <ColumnsPicker<number>
+               <ColumnsPickerInput<number>
                   defaultValue={[user.continuousAuntDays]}
                   columns={continuousAuntDaysColumnData}
                   onConfirm={(value) => {

@@ -1,104 +1,55 @@
 'use client'
 
+import { useUserStore } from '@/stores/user'
 import { getDayjs } from '@/utils/getDayjs'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { Fragment, useId } from 'react'
+import { Fragment } from 'react'
 
 export default function Date() {
-   const list = [
-      {
-         id: useId(),
-         from: {
-            year: 2022,
-            month: 12,
-            date: 24,
-         },
-         to: {
-            year: 2023,
-            month: 1,
-            date: 2,
-         },
-      },
-      {
-         id: useId(),
-         from: {
-            year: 2023,
-            month: 1,
-            date: 24,
-         },
-         to: {
-            year: 2023,
-            month: 2,
-            date: 24,
-         },
-      },
+   const timePeriodOfHistoricalAuntDay = useUserStore(
+      (state) => state.timePeriodOfHistoricalAuntDay,
+   )
 
-      {
-         id: useId(),
-         from: {
-            year: 2023,
-            month: 2,
-            date: 26,
-         },
-         to: {
-            year: 2023,
-            month: 3,
-            date: 12,
-         },
-      },
-      {
-         id: useId(),
-         from: {
-            year: 2023,
-            month: 2,
-            date: 26,
-         },
-         to: {
-            year: 2023,
-            month: 3,
-            date: 12,
-         },
-      },
-      {
-         id: useId(),
-         from: {
-            year: 2023,
-            month: 2,
-            date: 26,
-         },
-         to: {
-            year: 2023,
-            month: 2,
-            date: 27,
-         },
-      },
-   ]
-   return (
-      <div className='relative flex h-full flex-col overflow-hidden'>
-         <div className='flex flex-none p-5'>
-            <Link href={'/main'}>
-               <svg
-                  width='1em'
-                  height='1em'
-                  className='text-4xl'
-                  viewBox='0 0 29 29'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
-               >
-                  <path
-                     d='M28.1666 12.7917H7.37623L16.9258 3.24209L14.5 0.833344L0.833313 14.5L14.5 28.1667L16.9087 25.7579L7.37623 16.2083H28.1666V12.7917Z'
-                     fill='black'
-                  />
-               </svg>
-            </Link>
+   const back = (
+      <Link href={'/main'}>
+         <svg
+            width='1em'
+            height='1em'
+            className='text-4xl'
+            viewBox='0 0 29 29'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+         >
+            <path
+               d='M28.1666 12.7917H7.37623L16.9258 3.24209L14.5 0.833344L0.833313 14.5L14.5 28.1667L16.9087 25.7579L7.37623 16.2083H28.1666V12.7917Z'
+               fill='black'
+            />
+         </svg>
+      </Link>
+   )
+
+   if (!timePeriodOfHistoricalAuntDay.length) {
+      return (
+         <div className='relative flex h-full flex-col'>
+            <div className='flex flex-none p-5 absolute top-0 left-0 w-full'>{back}</div>
+            <div className='flex h-full flex-auto flex-col items-center justify-center overflow-auto font-medium'>
+               暂无数据
+            </div>
          </div>
+      )
+   }
+
+   return (
+      <div className='relative flex h-full flex-col'>
+         <div className='flex flex-none p-5'>{back}</div>
          <div className='flex-auto overflow-auto p-5'>
-            {list.map((item, index) => {
+            {timePeriodOfHistoricalAuntDay.map((item, index) => {
                return (
                   <Fragment key={item.id}>
                      {(index === 0 ||
-                        list[index - 1].to.year !== item.from.year) && (
+                        timePeriodOfHistoricalAuntDay[index - 1].to.year !==
+                           item.from.year) && (
                         <div className='sticky top-0 pt-2 text-sm'>
                            <span className='bg-[#FF7272] py-1'>
                               {item.from.year}
@@ -114,7 +65,9 @@ export default function Date() {
                         <div className='h-4 w-4 flex-none rounded-full bg-black'></div>
                         <div className='flex flex-auto items-center justify-center space-x-2'>
                            <div className='pl-5 text-4xl font-bold italic'>
-                              {item.from.month} / {item.from.date}
+                              {item.from.month}
+                              <span className='px-2 font-normal'>/</span>
+                              {item.from.date}
                            </div>
                            <div className='self-end text-xs italic'>开始</div>
                         </div>
@@ -161,12 +114,15 @@ export default function Date() {
                         <div className='h-4 w-4 flex-none rounded-full bg-black'></div>
                         <div className='flex flex-auto items-center justify-center space-x-2'>
                            <div className='pl-5 text-4xl font-bold italic'>
-                              {item.to.month} / {item.to.date}
+                              {item.to.month}
+                              <span className='px-2 font-normal'>/</span>
+                              {item.to.date}
                            </div>
                            <div className='self-end text-xs italic'>结束</div>
                         </div>
                      </div>
-                     {index === list.length - 1 ? null : (
+                     {index ===
+                     timePeriodOfHistoricalAuntDay.length - 1 ? null : (
                         <div className='mb-5 border-b border-b-black pb-5'></div>
                      )}
                   </Fragment>
