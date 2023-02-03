@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { CountdownLogic } from "@/components/CountdownLogic";
 
 export default function Home() {

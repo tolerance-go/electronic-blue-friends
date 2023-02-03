@@ -1,4 +1,5 @@
 import { Frame } from "@/components/Frame";
+import { LocalDataValidation } from "@/components/LocalDataValidation";
 import "./globals.css";
 
 export default function RootLayout({
@@ -10,6 +11,7 @@ export default function RootLayout({
     <html lang="zh-CN">
       <head />
       <body className="h-screen w-screen">
+        <LocalDataValidation />
         <Frame>{children}</Frame>
       </body>
     </html>

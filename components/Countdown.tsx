@@ -9,7 +9,7 @@ export const Countdown = ({
   onDone?: () => void;
   className: string;
 }) => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(4);
   const tlRef = useRef<NodeJS.Timer>();
 
   useEffect(() => {

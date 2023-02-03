@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String
+
+  // 最近姨妈来的日期
+  theDateWhenMyAuntCameRecentlyYear  Int
+  theDateWhenMyAuntCameRecentlyMonth Int
+  theDateWhenMyAuntCameRecentlyDate  Int
+
+  // 持续姨妈天数
+  continuousAuntDays Int
+
+  // 姨妈周期长度
+  auntCycleLength Int
+
+  createTime DateTime? @default(now())
+}
