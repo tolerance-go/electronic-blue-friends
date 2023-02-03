@@ -1,16 +1,16 @@
-"use client";
+'use client'
 
-import { Countdown } from "./Countdown";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation'
+import { Countdown } from './Countdown'
 
 export const CountdownLogic = () => {
-  const router = useRouter();
-  return (
-    <Countdown
-      className="text-white absolute top-3 right-4 w-7 h-7 rounded-full flex justify-center items-center bg-black"
-      onDone={() => {
-        router.push("/steps");
-      }}
-    />
-  );
-};
+   const router = useRouter()
+   return (
+      <Countdown
+         className='absolute top-3 right-4 flex h-7 w-7 items-center justify-center rounded-full bg-black text-white'
+         onDone={() => {
+            router.push('/steps')
+         }}
+      />
+   )
+}

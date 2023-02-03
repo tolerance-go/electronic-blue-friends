@@ -1,9 +1,9 @@
-import { getMonthDays } from "utils/getMonthDays";
-import { describe, expect, test } from "vitest";
+import { getMonthDays } from 'utils/getMonthDays'
+import { describe, expect, test } from 'vitest'
 
-describe("month-days", async () => {
-  test("basic", async () => {
-    expect(getMonthDays(2023, 2)).toMatchInlineSnapshot(`
+describe('month-days', async () => {
+   test('basic', async () => {
+      expect(getMonthDays(2023, 2)).toMatchInlineSnapshot(`
       [
         [
           null,
@@ -51,9 +51,9 @@ describe("month-days", async () => {
           null,
         ],
       ]
-    `);
+    `)
 
-    expect(getMonthDays(2029, 6)).toMatchInlineSnapshot(`
+      expect(getMonthDays(2029, 6)).toMatchInlineSnapshot(`
       [
         [
           null,
@@ -110,6 +110,6 @@ describe("month-days", async () => {
           null,
         ],
       ]
-    `);
-  });
-});
+    `)
+   })
+})

@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 .write-rl-upright {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
+   writing-mode: vertical-rl;
+   text-orientation: upright;
 }

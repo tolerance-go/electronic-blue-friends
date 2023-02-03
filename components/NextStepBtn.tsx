@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes } from 'react'
 
 export const NextStepBtn = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <div className="mt-3">
-      <button
-        {...props}
-        className="border-black border text-black w-full py-2 px-4 font-medium italic"
-      ></button>
-    </div>
-  );
-};
+   return (
+      <div className='mt-3'>
+         <button
+            {...props}
+            className='w-full border border-black py-2 px-4 font-medium italic text-black'
+         ></button>
+      </div>
+   )
+}
