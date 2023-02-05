@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import { EstimatedMenstrualPeriodLink } from '../EstimatedMenstrualPeriodLink'
 import HereComesAuntButtonLogic from '../HereComesAuntButtonLogic'
+import { NearestReminder } from '../NearestReminder'
 
 export const MainPage = () => {
    return (
@@ -27,19 +29,9 @@ export const MainPage = () => {
                   </svg>
                </Link>
             </div>
-            <div className='pt-24 pb-20 text-center italic'>
-               <span className='text-9xl font-bold'>3</span>
-               <span className='align-text-bottom text-xl'>天后</span>
-            </div>
+            <NearestReminder />
 
-            <div className='py-4 text-center'>
-               <Link
-                  href={'/date'}
-                  className='text-xl underline underline-offset-2'
-               >
-                  预计经期开始日为 2 月 1 日
-               </Link>
-            </div>
+            <EstimatedMenstrualPeriodLink />
          </div>
 
          <div className='flex grow flex-col items-center justify-center'>

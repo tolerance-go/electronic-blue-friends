@@ -1,6 +1,9 @@
 'use client'
 
-import { dateColumnDataOfRecentAunt } from '@/constants/keys'
+import {
+   dateColumnDataOfRecentAunt,
+   getTodayColsPickerValue,
+} from '@/constants/keys'
 import { useUserStore } from '@/stores/user'
 import { useRef } from 'react'
 import { ColumnsPicker, ColumnsPickerAPI } from './ColumnsPicker'
@@ -15,6 +18,7 @@ export const HereComesAuntButtonLogic = () => {
    const areYouComingToMyAuntNow = useUserStore(
       (state) => state.areYouComingToMyAuntNow,
    )
+   const addAnAuntDayPeriod = useUserStore((state) => state.addAnAuntDayPeriod)
 
    const colRef = useRef<ColumnsPickerAPI>(null)
 
@@ -23,11 +27,7 @@ export const HereComesAuntButtonLogic = () => {
          <button
             className='group relative inline-block focus:outline-none focus:ring'
             onClick={() => {
-               if (!areYouComingToMyAuntNow) {
-                  colRef.current?.open()
-               } else {
-                  setAreYouComingToMyAuntNow(false)
-               }
+               colRef.current?.open()
             }}
          >
             <span className='absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-y-0 group-hover:translate-x-0'></span>
@@ -35,11 +35,24 @@ export const HereComesAuntButtonLogic = () => {
                {areYouComingToMyAuntNow ? '姨妈走了' : '来姨妈了'}
             </span>
          </button>
-         <ColumnsPicker
+         <ColumnsPicker<number>
             ref={colRef}
+            defaultValue={[...getTodayColsPickerValue()]}
             columns={dateColumnDataOfRecentAunt}
-            onConfirm={() => {
-               setAreYouComingToMyAuntNow(true)
+            onConfirm={(val) => {
+               if (!areYouComingToMyAuntNow) {
+                  setAreYouComingToMyAuntNow({
+                     year: val![0],
+                     month: val![1],
+                     date: val![2],
+                  })
+               } else {
+                  addAnAuntDayPeriod({
+                     year: val![0],
+                     month: val![1],
+                     date: val![2],
+                  })
+               }
             }}
          />
       </>

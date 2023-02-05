@@ -19,11 +19,17 @@ export const isSSR = typeof window === 'undefined'
 
 export const today = dayjs()
 
-export const todayColsPickerValue = [
+export const getTodayColsPickerValue = () => [
    today.year(),
    today.month() + 1,
    today.date(),
 ]
+
+export const getTodayMeta = () => ({
+   year: today.year(),
+   month: today.month() + 1,
+   date: today.date(),
+})
 
 // 最近姨妈来的日期列数据
 export const dateColumnDataOfRecentAunt = [
