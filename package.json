@@ -17,6 +17,7 @@
       "format": "prettier '**/*.{css,js,mjs,ts,tsx,md,mdx}' --write",
       "postinstall": "pnpm db:generate",
       "lint": "prettier '**/*.{css,js,mjs,ts,tsx,md,mdx}' --check && next lint",
+      "prepare": "husky install",
       "start": "next start -p 3004",
       "test": "vitest run",
       "test:dev": "vitest -u"
