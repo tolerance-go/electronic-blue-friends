@@ -1,5 +1,5 @@
-import { getMenstruationDate } from 'utils/getMenstruationDate'
 import dayjs from 'dayjs'
+import { getMenstruationDate } from 'utils/getMenstruationDate'
 import { getTheIntervalBetweenTheNextAuntSDay } from 'utils/getTheIntervalBetweenTheNextAuntSDay'
 import { describe, expect, test } from 'vitest'
 

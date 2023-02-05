@@ -5,12 +5,11 @@ import { NearestReminder } from '../NearestReminder'
 import { StatusDay } from '../StatusDay'
 
 export const MainPage = () => {
-
    return (
       <div className='relative flex h-full flex-col overflow-hidden p-8'>
          <div className='flex-none'>
             <div className='flex items-center justify-between'>
-              <StatusDay />
+               <StatusDay />
                <Link href='/settings' className='text-3xl'>
                   <svg
                      width='1em'

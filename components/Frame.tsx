@@ -18,7 +18,10 @@ export const Frame = (props: PropsWithChildren) => {
    const ref = useRef<HTMLDivElement>(null)
    return (
       <FrameRefContext.Provider value={ref}>
-         <div ref={ref} className='mx-auto h-full max-w-screen-sm border-4 border-black bg-[#FF7272] relative'>
+         <div
+            ref={ref}
+            className='relative mx-auto h-full max-w-screen-sm border-4 border-black bg-[#FF7272]'
+         >
             {props.children}
          </div>
       </FrameRefContext.Provider>
