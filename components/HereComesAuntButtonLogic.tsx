@@ -32,7 +32,8 @@ export const HereComesAuntButtonLogic = () => {
          >
             <span className='absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-y-0 group-hover:translate-x-0'></span>
             <span className='relative inline-block border-2 border-current px-12 py-7 text-3xl font-medium uppercase tracking-widest text-white group-active:text-opacity-75'>
-               {areYouComingToMyAuntNow ? '姨妈走了' : '来姨妈了'}
+               <span>{areYouComingToMyAuntNow ? '姨妈走了' : '来姨妈了'}</span>
+               {areYouComingToMyAuntNow ? <span className='inline-block text-xs'>最近姨妈日：{areYouComingToMyAuntNow.month}/{areYouComingToMyAuntNow.date}</span> : null}
             </span>
          </button>
          <ColumnsPicker<number>

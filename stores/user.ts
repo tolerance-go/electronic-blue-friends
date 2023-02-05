@@ -3,11 +3,9 @@ import {
    defaultAuntCycleLength,
    defaultContinuousAuntDays,
    getTodayColsPickerValue,
-   today,
 } from '@/constants/keys'
 import { User } from '@/prisma/client'
 import { YMDDate } from '@/types/global'
-import { getDayjs } from '@/utils/getDayjs'
 import produce, { Draft } from 'immer'
 import invariant from 'invariant'
 import { uid } from 'uid'
@@ -15,21 +13,23 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export type UserStore = {
-   setUsername: (name: string) => void
-   init: (user: User) => void
-   setAuntDate: (date: YMDDate) => void
-   setContinuousAuntDays: (value: number) => void
-   setAuntCycleLength: (val: number) => void
-   addAnAuntDayPeriod: (val: YMDDate) => void
    // 历史姨妈日时间段
    timePeriodOfHistoricalAuntDay: {
       id: string
       from: YMDDate
       to: YMDDate
    }[]
-   setAreYouComingToMyAuntNow: (val: YMDDate) => void
    // 当前是否来姨妈了
    areYouComingToMyAuntNow?: YMDDate
+   setUsername: (name: string) => void
+   init: (user: User) => void
+   setAuntDateAndComingAuntNow: (date: YMDDate) => void
+   setContinuousAuntDays: (value: number) => void
+   setAuntCycleLength: (val: number) => void
+   addAnAuntDayPeriod: (val: YMDDate) => void
+   setAreYouComingToMyAuntNow: (val: YMDDate) => void
+   /** 删除历史姨妈时间段 */
+   deleteHistoricalAuntTimePeriod: (index: number) => void
 } & Omit<User, 'id' | 'createTime'>
 
 const todayColsPickerValue = getTodayColsPickerValue()
@@ -53,6 +53,13 @@ export const useUserStore = create<UserStore>()(
                theDateWhenMyAuntCameRecentlyDate: val.date,
             })
          },
+         deleteHistoricalAuntTimePeriod: (index) => {
+            set(
+               produce((state: Draft<UserStore>) => {
+                  state.timePeriodOfHistoricalAuntDay.splice(index, 1)
+               }),
+            )
+         },
          setAuntCycleLength: (val) => set({ auntCycleLength: val }),
          /** 添加一个姨妈日时间段 */
          addAnAuntDayPeriod: (end) => {
@@ -71,14 +78,9 @@ export const useUserStore = create<UserStore>()(
                }),
             )
          },
-         setAuntDate: (date: YMDDate) => {
-            if (today.isSame(getDayjs(date.year, date.month, date.date), 'D')) {
-               set({
-                  areYouComingToMyAuntNow: date,
-               })
-            }
-
+         setAuntDateAndComingAuntNow: (date: YMDDate) => {
             set({
+               areYouComingToMyAuntNow: date,
                theDateWhenMyAuntCameRecentlyYear: date.year,
                theDateWhenMyAuntCameRecentlyMonth: date.month,
                theDateWhenMyAuntCameRecentlyDate: date.date,

@@ -1,20 +1,10 @@
 'use client'
 
 import { useUserStore } from '@/stores/user'
-import {
-   getMenstruationDate,
-   getMenstruationDateWithPrevMonth,
-} from '@/utils/getMenstruationDate'
 import { getMonthDays } from '@/utils/getMonthDays'
-import { getOvulation, getOvulationWithNext } from '@/utils/getOvulation'
-import {
-   getSafeDays,
-   getSafeDaysWithNextMonth,
-   getSafeDaysWithPrevMonth,
-} from '@/utils/getSafeDays'
+import { getTheSpecialDayOfTheCurrentMonth } from '@/utils/getTheSpecialDayOfTheCurrentMonth'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
-import { flatten } from 'lodash-es'
 import Link from 'next/link'
 import { Fragment, useState } from 'react'
 
@@ -42,7 +32,7 @@ export const DatePage = () => {
    )
 
    return (
-      <div className='relative flex h-full flex-col overflow-hidden'>
+      <div className='relative flex h-full flex-col overflow-auto'>
          <div className='flex px-5 pt-5 pb-4'>
             <Link href={'/main'}>
                <svg
@@ -126,105 +116,20 @@ export const DatePage = () => {
                {getMonthDays(year, month)
                   .filter((item) => item.some((item) => item !== null))
                   .map((line, index) => {
-                     // 当前日历下应该显示的上一个月姨妈日
-                     const theAuntDayOfThePreviousMonthThatShouldBeDisplayed =
-                        getMenstruationDateWithPrevMonth(
-                           year,
-                           month,
-                           continuousAuntDays,
-                           auntCycleLength,
-                           {
-                              year: theDateWhenMyAuntCameRecentlyYear,
-                              month: theDateWhenMyAuntCameRecentlyMonth,
-                              date: theDateWhenMyAuntCameRecentlyDate,
-                           },
-                        )
-                     // 当前日历下应该来姨妈的日子
-                     const theDayWhenYouShouldComeToMyAunt =
-                        getMenstruationDate(
-                           year,
-                           month,
-                           continuousAuntDays,
-                           auntCycleLength,
-                           {
-                              year: theDateWhenMyAuntCameRecentlyYear,
-                              month: theDateWhenMyAuntCameRecentlyMonth,
-                              date: theDateWhenMyAuntCameRecentlyDate,
-                           },
-                        )
-
-                     // 全部当前日历下应该来姨妈的日子
-                     const allTheDaysThatShouldComeToMyAuntUnder = flatten([
-                        ...theAuntDayOfThePreviousMonthThatShouldBeDisplayed,
-                        ...theDayWhenYouShouldComeToMyAunt,
-                     ])
-
-                     // 当前日历显示下一个月的安全日
-                     const theCurrentCalendarShowsTheSecurityDayOfTheNextMonth =
-                        getSafeDaysWithNextMonth(
-                           year,
-                           month,
-                           continuousAuntDays,
-                           auntCycleLength,
-                           {
-                              year: theDateWhenMyAuntCameRecentlyYear,
-                              month: theDateWhenMyAuntCameRecentlyMonth,
-                              date: theDateWhenMyAuntCameRecentlyDate,
-                           },
-                        )
-                     // 当前日历显示上一个月的安全日
-                     const theCurrentCalendarShowsTheSecurityDayOfThePreviousMonth =
-                        getSafeDaysWithPrevMonth(
-                           year,
-                           month,
-                           continuousAuntDays,
-                           auntCycleLength,
-                           {
-                              year: theDateWhenMyAuntCameRecentlyYear,
-                              month: theDateWhenMyAuntCameRecentlyMonth,
-                              date: theDateWhenMyAuntCameRecentlyDate,
-                           },
-                        )
-
-                     // 当前日历下安全日
-                     const safetyDayUnderCalendar = getSafeDays(year, month, [
-                        ...theAuntDayOfThePreviousMonthThatShouldBeDisplayed,
-                        ...theDayWhenYouShouldComeToMyAunt,
-                     ])
-
-                     // 所有当前日历下的安全日
-                     const allSecurityDaysUnderTheCurrentCalendar = flatten([
-                        ...safetyDayUnderCalendar,
-                        theCurrentCalendarShowsTheSecurityDayOfTheNextMonth,
-                        theCurrentCalendarShowsTheSecurityDayOfThePreviousMonth,
-                     ])
-
-                     // 当前日历的排卵日
-                     const ovulationDayOfTheCurrentCalendar = getOvulation(
+                     const {
+                        allTheDaysThatShouldComeToMyAuntUnder,
+                        allSecurityDaysUnderTheCurrentCalendar,
+                        allOvulationDaysInTheCurrentCalendar,
+                        allPregnancyPronePeriodsDisplayedInTheCurrentMonth,
+                     } = getTheSpecialDayOfTheCurrentMonth({
                         year,
                         month,
-                        theDayWhenYouShouldComeToMyAunt,
-                     )
-
-                     // 当前日历显示下个月的排卵日
-                     const theCurrentCalendarDisplaysTheOvulationDateOfTheNextMonth =
-                        getOvulationWithNext(
-                           year,
-                           month,
-                           continuousAuntDays,
-                           auntCycleLength,
-                           {
-                              year: theDateWhenMyAuntCameRecentlyYear,
-                              month: theDateWhenMyAuntCameRecentlyMonth,
-                              date: theDateWhenMyAuntCameRecentlyDate,
-                           },
-                        )
-
-                     // 所有当前日历下的排卵日
-                     const allOvulationDaysInTheCurrentCalendar = [
-                        ...ovulationDayOfTheCurrentCalendar,
-                        theCurrentCalendarDisplaysTheOvulationDateOfTheNextMonth,
-                     ]
+                        continuousAuntDays,
+                        auntCycleLength,
+                        theDateWhenMyAuntCameRecentlyYear,
+                        theDateWhenMyAuntCameRecentlyMonth,
+                        theDateWhenMyAuntCameRecentlyDate,
+                     })
 
                      return (
                         <Fragment key={year + month + index}>
@@ -251,6 +156,15 @@ export const DatePage = () => {
                                        num,
                                     )
 
+                                 /**
+                                  * 应该显示易孕日
+                                  */
+                                 const easyPregnancyDateShouldBeDisplayed =
+                                    num !== null &&
+                                    allPregnancyPronePeriodsDisplayedInTheCurrentMonth.includes(
+                                       num,
+                                    )
+
                                  return (
                                     <div
                                        className='flex w-5 flex-auto items-center justify-center px-2 py-4 text-2xl italic'
@@ -260,7 +174,8 @@ export const DatePage = () => {
                                           num === today) ||
                                        theMenstrualPeriodShouldBeDisplayed ||
                                        securityDayShouldBeDisplayed ||
-                                       theOvulationDateShouldBeDisplayed ? (
+                                       theOvulationDateShouldBeDisplayed ||
+                                       easyPregnancyDateShouldBeDisplayed ? (
                                           <div className='relative w-full text-center'>
                                              <span
                                                 className={clsx(
@@ -276,13 +191,16 @@ export const DatePage = () => {
                                                 className={clsx(
                                                    'absolute bottom-0 z-0 h-4 w-full -skew-x-6',
                                                    {
-                                                      'bg-violet-600':
+                                                      'bg-pink-600':
                                                          theMenstrualPeriodShouldBeDisplayed,
                                                       'bg-black':
                                                          !theMenstrualPeriodShouldBeDisplayed &&
                                                          securityDayShouldBeDisplayed,
                                                       'bg-yellow-500':
                                                          theOvulationDateShouldBeDisplayed,
+                                                      'bg-violet-600':
+                                                         !theOvulationDateShouldBeDisplayed &&
+                                                         easyPregnancyDateShouldBeDisplayed,
                                                    },
                                                 )}
                                              ></div>
@@ -317,6 +235,10 @@ export const DatePage = () => {
                   type: 'ovulation',
                },
                {
+                  title: '易孕期',
+                  type: 'easyPregnancyDay',
+               },
+               {
                   title: '安全期',
                   type: 'safe',
                },
@@ -329,13 +251,22 @@ export const DatePage = () => {
                      <div
                         className={clsx('absolute bottom-0 z-0 h-5 w-full', {
                            'bg-black': item.type === 'safe',
-                           'bg-violet-600': item.type === 'moon',
+                           'bg-pink-600': item.type === 'moon',
                            'bg-yellow-500': item.type === 'ovulation',
+                           'bg-violet-600': item.type === 'easyPregnancyDay',
                         })}
                      ></div>
                   </div>
                )
             })}
+         </div>
+         <div className='py-2 px-4 pb-10 text-sm'>
+            <div className='pb-1'>
+               月经期：最近一次姨妈日到距离周期长度最近一段经期持续天数
+            </div>
+            <div className='pb-1'>排卵日：下次月经来潮前 14 天左右</div>
+            <div className='pb-1'>易孕期：排卵日前 5 天，后 4 天左右</div>
+            <div className='pb-1'>安全日：月经来潮前 7 天，后 8 天左右</div>
          </div>
       </div>
    )

@@ -8,7 +8,7 @@ import {
 } from '@/constants/keys'
 import { useUserStore } from '@/stores/user'
 import Link from 'next/link'
-import shallow from 'zustand/shallow'
+import { shallow } from 'zustand/shallow'
 import { ColumnsPickerInput } from '../ColumnsPickerInput'
 
 export const SettingsPage = () => {
@@ -23,14 +23,14 @@ export const SettingsPage = () => {
    const sets = useUserStore(
       (state) => ({
          setAuntCycleLength: state.setAuntCycleLength,
-         setAuntDate: state.setAuntDate,
+         setAuntDateAndComingAuntNow: state.setAuntDateAndComingAuntNow,
          setContinuousAuntDays: state.setContinuousAuntDays,
       }),
       shallow,
    )
 
    return (
-      <div className='relative flex h-full flex-col justify-center p-12'>
+      <div className='relative flex h-full flex-col justify-center p-12 overflow-auto'>
          <div className='absolute top-0 left-0 flex px-5 py-5'>
             <Link href={'/main'}>
                <svg
@@ -78,7 +78,7 @@ export const SettingsPage = () => {
                                     columns={item.columns}
                                     onConfirm={(value) => {
                                        if (value) {
-                                          sets.setAuntDate({
+                                          sets.setAuntDateAndComingAuntNow({
                                              year: value[0],
                                              month: value[1],
                                              date: value[2],

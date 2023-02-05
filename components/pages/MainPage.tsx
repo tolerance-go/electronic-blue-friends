@@ -1,19 +1,19 @@
+import { today } from '@/constants/keys'
+import { useUserStore } from '@/stores/user'
+import { getTheSpecialDayOfTheCurrentMonth } from '@/utils/getTheSpecialDayOfTheCurrentMonth'
 import Link from 'next/link'
 import { EstimatedMenstrualPeriodLink } from '../EstimatedMenstrualPeriodLink'
 import HereComesAuntButtonLogic from '../HereComesAuntButtonLogic'
 import { NearestReminder } from '../NearestReminder'
+import { StatusDay } from '../StatusDay'
 
 export const MainPage = () => {
+
    return (
       <div className='relative flex h-full flex-col overflow-hidden p-8'>
          <div className='flex-none'>
             <div className='flex items-center justify-between'>
-               <div className='relative w-24 text-center'>
-                  <span className='relative -top-1 z-10 text-2xl text-white'>
-                     安全期
-                  </span>
-                  <div className='absolute bottom-0 z-0 h-6 w-full bg-black'></div>
-               </div>
+              <StatusDay />
                <Link href='/settings' className='text-3xl'>
                   <svg
                      width='1em'

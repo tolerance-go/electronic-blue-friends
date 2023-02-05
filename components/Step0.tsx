@@ -15,7 +15,7 @@ export default function Step0({
 }) {
    const user = useUserStore(
       (state) => ({
-         setAuntDate: state.setAuntDate,
+         setAuntDateAndComingAuntNow: state.setAuntDateAndComingAuntNow,
          year: state.theDateWhenMyAuntCameRecentlyYear,
          month: state.theDateWhenMyAuntCameRecentlyMonth,
          date: state.theDateWhenMyAuntCameRecentlyDate,
@@ -38,19 +38,22 @@ export default function Step0({
                   defaultValue={[user.year, user.month, user.date]}
                   columns={dateColumnDataOfRecentAunt}
                   onConfirm={(value) => {
-                     if (value) {
-                        user.setAuntDate({
-                           year: value[0],
-                           month: value[1],
-                           date: value[2],
-                        })
-                     }
+                     user.setAuntDateAndComingAuntNow({
+                        year: value![0],
+                        month: value![1],
+                        date: value![2],
+                     })
                   }}
                   getContainer={() => wrapRef.current}
                />
             </div>
             <NextStepBtn
                onClick={() => {
+                  user.setAuntDateAndComingAuntNow({
+                     year: user.year,
+                     month: user.month,
+                     date: user.date,
+                  })
                   sliderRef.current?.slickNext()
                }}
             >

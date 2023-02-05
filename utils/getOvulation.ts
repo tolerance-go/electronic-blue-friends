@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { getMenstruationDate } from './getMenstruationDate'
 
 /**
- * 根据当前日历经期范围，获得当前日历上显示的排卵日
+ * 获取当前日历月份的排卵日，根据下个月经期开始日计算
  * 经期前 14 天为排卵日
  */
 export const getOvulationWithNext = (
@@ -16,21 +16,25 @@ export const getOvulationWithNext = (
       date: number
    },
 ) => {
-   const target = dayjs(`${year}-${month}`, 'YYYY-M')
+   const currentMonth = dayjs(`${year}-${month}`, 'YYYY-M')
 
-   const nextMonthTarget = target.add(1, 'M')
+   const nextMonth = currentMonth.add(1, 'M')
 
-   const nextMens = getMenstruationDate(
-      nextMonthTarget.year(),
-      nextMonthTarget.month() + 1,
+   const nextMonthMens = getMenstruationDate(
+      nextMonth.year(),
+      nextMonth.month() + 1,
       durationOfMenstrualPeriod,
       cycleLength,
       lastAuntDay,
    )
 
-   const startLen = nextMens[0][0]
+   const startLen = nextMonthMens[0][0]
 
-   return target.daysInMonth() - (14 - startLen)
+   if (startLen < 14) {
+      return currentMonth.daysInMonth() - (14 - startLen)
+   }
+
+   return null
 }
 
 /**

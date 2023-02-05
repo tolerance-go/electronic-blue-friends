@@ -35,9 +35,7 @@ export default function Step2({
                   defaultValue={[user.auntCycleLength]}
                   columns={auntCycleLengthColumnData}
                   onConfirm={(value) => {
-                     if (value) {
-                        user.setAuntCycleLength(user.auntCycleLength)
-                     }
+                     user.setAuntCycleLength(value![0])
                   }}
                   getContainer={() => wrapRef.current}
                />

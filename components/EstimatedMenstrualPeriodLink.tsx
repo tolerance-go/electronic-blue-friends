@@ -26,7 +26,7 @@ export const EstimatedMenstrualPeriodLink = () => {
                   month,
                   year,
                },
-            ).format('M 月 DD 日')}
+            ).format('M 月 D 日')}
          </Link>
       </div>
    )
