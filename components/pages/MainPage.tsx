@@ -1,6 +1,3 @@
-import { today } from '@/constants/keys'
-import { useUserStore } from '@/stores/user'
-import { getTheSpecialDayOfTheCurrentMonth } from '@/utils/getTheSpecialDayOfTheCurrentMonth'
 import Link from 'next/link'
 import { EstimatedMenstrualPeriodLink } from '../EstimatedMenstrualPeriodLink'
 import HereComesAuntButtonLogic from '../HereComesAuntButtonLogic'

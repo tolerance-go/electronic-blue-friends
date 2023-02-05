@@ -10,6 +10,7 @@ import { useUserStore } from '@/stores/user'
 import Link from 'next/link'
 import { shallow } from 'zustand/shallow'
 import { ColumnsPickerInput } from '../ColumnsPickerInput'
+import { useFrameRefContext } from '../Frame'
 
 export const SettingsPage = () => {
    const username = useUserStore((state) => state.username)
@@ -28,9 +29,10 @@ export const SettingsPage = () => {
       }),
       shallow,
    )
+   const frameRef = useFrameRefContext()
 
    return (
-      <div className='relative flex h-full flex-col justify-center p-12 overflow-auto'>
+      <div className='relative flex h-full flex-col justify-center overflow-auto p-12'>
          <div className='absolute top-0 left-0 flex px-5 py-5'>
             <Link href={'/main'}>
                <svg
@@ -74,6 +76,7 @@ export const SettingsPage = () => {
                            {
                               [theDateWhenMyAuntCameRecentlyKey]: (
                                  <ColumnsPickerInput<number>
+                                    getContainer={() => frameRef.current}
                                     defaultValue={[year, month, date]}
                                     columns={item.columns}
                                     onConfirm={(value) => {
@@ -89,6 +92,7 @@ export const SettingsPage = () => {
                               ),
                               [continuousAuntDaysKey]: (
                                  <ColumnsPickerInput<number>
+                                    getContainer={() => frameRef.current}
                                     defaultValue={[continuousAuntDays]}
                                     columns={item.columns}
                                     onConfirm={(value) => {
@@ -100,6 +104,7 @@ export const SettingsPage = () => {
                               ),
                               [auntCycleLengthKey]: (
                                  <ColumnsPickerInput<number>
+                                    getContainer={() => frameRef.current}
                                     defaultValue={[auntCycleLength]}
                                     columns={item.columns}
                                     onConfirm={(value) => {

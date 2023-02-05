@@ -52,7 +52,7 @@ const ColumnsPicker_ = <T extends ColumnsPickerValue>(
             ReactDOM.createPortal(
                <Transition
                   show={open}
-                  className={'absolute inset-x-0 bottom-0 z-10 w-screen'}
+                  className={'absolute inset-x-0 bottom-0 z-10 w-full'}
                   leave='transition ease-in duration-75'
                   leaveFrom='transform opacity-100 translate-y-0'
                   leaveTo='transform opacity-0 translate-y-full'

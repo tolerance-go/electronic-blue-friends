@@ -7,6 +7,7 @@ import {
 import { useUserStore } from '@/stores/user'
 import { useRef } from 'react'
 import { ColumnsPicker, ColumnsPickerAPI } from './ColumnsPicker'
+import { useFrameRefContext } from './Frame'
 
 /**
  * 来姨妈了按钮逻辑
@@ -22,6 +23,9 @@ export const HereComesAuntButtonLogic = () => {
 
    const colRef = useRef<ColumnsPickerAPI>(null)
 
+   const frameRef = useFrameRefContext()
+
+
    return (
       <>
          <button
@@ -31,15 +35,23 @@ export const HereComesAuntButtonLogic = () => {
             }}
          >
             <span className='absolute inset-0 translate-x-2 translate-y-2 bg-black transition-transform group-hover:translate-y-0 group-hover:translate-x-0'></span>
-            <span className='relative inline-block border-2 border-current px-12 py-7 text-3xl font-medium uppercase tracking-widest text-white group-active:text-opacity-75'>
-               <span>{areYouComingToMyAuntNow ? '姨妈走了' : '来姨妈了'}</span>
-               {areYouComingToMyAuntNow ? <span className='inline-block text-xs'>最近姨妈日：{areYouComingToMyAuntNow.month}/{areYouComingToMyAuntNow.date}</span> : null}
+            <span className='relative inline-flex flex-col items-center justify-center space-y-2 border-2 border-current px-12 py-7 text-3xl font-medium uppercase tracking-widest text-white group-active:text-opacity-75'>
+               <span className='inline-block'>
+                  {areYouComingToMyAuntNow ? '姨妈走了' : '来姨妈了'}
+               </span>
+               {areYouComingToMyAuntNow ? (
+                  <span className='inline-block text-xs'>
+                     最近姨妈日：{areYouComingToMyAuntNow.month}/
+                     {areYouComingToMyAuntNow.date}
+                  </span>
+               ) : null}
             </span>
          </button>
          <ColumnsPicker<number>
             ref={colRef}
             defaultValue={[...getTodayColsPickerValue()]}
             columns={dateColumnDataOfRecentAunt}
+            getContainer={() => frameRef.current}
             onConfirm={(val) => {
                if (!areYouComingToMyAuntNow) {
                   setAreYouComingToMyAuntNow({

@@ -20,7 +20,6 @@ export const StepsPage = () => {
             slidesToShow: 1,
             slidesToScroll: 1,
          }}
-         className='h-full'
       >
          {[
             {
@@ -36,7 +35,7 @@ export const StepsPage = () => {
                page: <Step2 sliderRef={sliderRef} />,
             },
          ].map(({ page, key }) => (
-            <div key={key} className='h-screen'>
+            <div key={key} className='h-full'>
                {page}
             </div>
          ))}
