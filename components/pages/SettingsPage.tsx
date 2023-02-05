@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { shallow } from 'zustand/shallow'
 import { ColumnsPickerInput } from '../ColumnsPickerInput'
 import { useFrameRefContext } from '../Frame'
+// import store from 'store2'
 
 export const SettingsPage = () => {
    const username = useUserStore((state) => state.username)
@@ -122,6 +123,9 @@ export const SettingsPage = () => {
             })}
          </div>
          <div className='py-5 text-right text-sm'>用户名：{username}</div>
+         {/* <div className='p-10' onClick={() => {
+            store.clearAll()
+         }}>clearAll</div> */}
       </div>
    )
 }
