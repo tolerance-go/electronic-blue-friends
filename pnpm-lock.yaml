@@ -15,6 +15,7 @@ specifiers:
   dayjs: ^1.11.7
   eslint: 8.33.0
   eslint-config-next: 13.1.6
+  husky: ^8.0.3
   immer: ^9.0.19
   invariant: ^2.2.4
   lodash-es: ^4.17.21
@@ -75,6 +76,7 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/react-slick': 0.23.10
   autoprefixer: 10.4.13_postcss@8.4.21
+  husky: 8.0.3
   postcss: 8.4.21
   prettier: 2.8.3
   prettier-plugin-organize-imports: 3.2.2_ioxdq35luteszuxmt2jhnqjeca
@@ -1936,6 +1938,12 @@ packages:
     dependencies:
       react-is: 16.13.1
     dev: false
+
+  /husky/8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
 
   /hyphenate-style-name/1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
