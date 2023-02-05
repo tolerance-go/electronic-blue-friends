@@ -1,10 +1,10 @@
 {
-   "name": "my-app",
+   "name": "electronic-blue-friends",
    "version": "0.1.0",
    "private": true,
    "scripts": {
       "build": "next build",
-      "ci": "git pull && pnpm install && pnpm lint && pnpm test && pnpm build && pnpm postbuild && pm2 restart nooo-ui",
+      "ci": "git pull && pnpm install && pnpm lint && pnpm test && pnpm build && pm2 restart electronic-blue-friends",
       "db:dev": "pnpm db:studio",
       "db:format": "prisma format",
       "db:generate": "prisma generate",
